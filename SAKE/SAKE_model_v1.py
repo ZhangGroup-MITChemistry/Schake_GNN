@@ -31,7 +31,6 @@ class SAKELayer(torch.nn.Module):
                  input_nf, 
                  output_nf, 
                  hidden_nf, 
-                 edges_in_d=0,
                  act_fn=torch.nn.CELU(alpha=2.0), 
                  n_heads=4, 
                  cutoff=1,
@@ -49,7 +48,7 @@ class SAKELayer(torch.nn.Module):
         
         # Modefied for SAKE (hidden_nf*2)
         self.edge_mlp = torch.nn.Sequential(
-            torch.nn.Linear(input_edge + edge_coords_nf + hidden_nf + edges_in_d, hidden_nf),
+            torch.nn.Linear(input_edge + edge_coords_nf + hidden_nf, hidden_nf),
             act_fn,
             torch.nn.Linear(hidden_nf, hidden_nf),
             act_fn
@@ -217,7 +216,6 @@ class SAKE(torch.nn.Module):
                  in_node_nf, 
                  hidden_nf, 
                  out_node_nf, 
-                 in_edge_nf=0, 
                  device='cpu', 
                  act_fn=torch.nn.CELU(alpha=2.0), 
                  energy_act_fn=torch.nn.CELU(alpha=2.0), 
@@ -234,7 +232,6 @@ class SAKE(torch.nn.Module):
         :param in_node_nf: Number of features for 'h' at the input
         :param hidden_nf: Number of hidden features
         :param out_node_nf: Number of features for 'h' at the output
-        :param in_edge_nf: Number of features for the edge features (not used here)
         :param device: Device (e.g. 'cpu', 'cuda:0',...)
         :param act_fn: Non-linearity
         :param energy_act_fn: Non-linearity for the energy-predicting NN
@@ -275,7 +272,7 @@ class SAKE(torch.nn.Module):
         self.embedding_in = torch.nn.Embedding(num_types, self.hidden_nf)
         self.embedding_out = torch.nn.Linear(self.hidden_nf, out_node_nf)
         for i in range(0, n_layers):
-            self.add_module("SAKE_%d" % i, SAKELayer(self.hidden_nf, self.hidden_nf, self.hidden_nf, edges_in_d=in_edge_nf,
+            self.add_module("SAKE_%d" % i, SAKELayer(self.hidden_nf, self.hidden_nf, self.hidden_nf,
                                                 act_fn=act_fn, n_heads=self.n_heads, cutoff=self.cutoff, kernel_size=self.kernel_size, normalize=normalize))
         
         # Define feed forward network that predicts energy contribution for each output
@@ -319,7 +316,6 @@ class SAKE(torch.nn.Module):
 def create_SAKE_layers(in_node_nf, 
                        hidden_nf, 
                        out_node_nf, 
-                       in_edge_nf=0, 
                        act_fn=torch.nn.CELU(alpha=2.0), 
                        energy_act_fn=torch.nn.CELU(alpha=2.0), 
                        n_layers=4,
@@ -357,7 +353,7 @@ def create_SAKE_layers(in_node_nf,
     # Create SAKE message passing layers
     sake_conv = torch.nn.ModuleList()
     for _ in range(n_layers):
-        conv = SAKELayer(hidden_nf, hidden_nf, hidden_nf, edges_in_d=in_edge_nf,
+        conv = SAKELayer(hidden_nf, hidden_nf, hidden_nf,
                          act_fn=act_fn, n_heads=n_heads, cutoff=cutoff, kernel_size=kernel_size, normalize=normalize
                         )
         
@@ -393,7 +389,6 @@ class SAKE_modular(torch.nn.Module):
         :param in_node_nf: Number of features for 'h' at the input
         :param hidden_nf: Number of hidden features
         :param out_node_nf: Number of features for 'h' at the output
-        :param in_edge_nf: Number of features for the edge features (not used here)
         :param device: Device (e.g. 'cpu', 'cuda:0',...)
         :param act_fn: Non-linearity
         :param energy_act_fn: Non-linearity for the energy-predicting NN
