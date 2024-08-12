@@ -350,7 +350,6 @@ class SAKELayer(torch.nn.Module):
                  input_nf, 
                  output_nf, 
                  hidden_nf, 
-                 edges_in_d=0,
                  act_fn=torch.nn.CELU(alpha=2.0), 
                  n_heads=4, 
                  cutoff=0.5,
@@ -366,7 +365,7 @@ class SAKELayer(torch.nn.Module):
         
         # Modefied for SAKE (hidden_nf*2)
         self.edge_mlp = torch.nn.Sequential(
-            torch.nn.Linear(input_edge + edge_coords_nf + hidden_nf + edges_in_d, hidden_nf),
+            torch.nn.Linear(input_edge + edge_coords_nf + hidden_nf, hidden_nf),
             act_fn,
             torch.nn.Linear(hidden_nf, hidden_nf),
             act_fn
@@ -503,7 +502,6 @@ class ShiftedSoftplus(torch.nn.Module):
 def create_SAKE_layers(in_node_nf, 
                        hidden_nf, 
                        out_node_nf, 
-                       in_edge_nf=0, 
                        act_fn=torch.nn.CELU(alpha=2.0), 
                        energy_act_fn=torch.nn.CELU(alpha=2.0), 
                        n_layers=4,
@@ -541,7 +539,7 @@ def create_SAKE_layers(in_node_nf,
     # Create SAKE message passing layers
     sake_conv = torch.nn.ModuleList()
     for _ in range(n_layers):
-        conv = SAKELayer(hidden_nf, hidden_nf, hidden_nf, edges_in_d=in_edge_nf,
+        conv = SAKELayer(hidden_nf, hidden_nf, hidden_nf,
                          act_fn=act_fn, n_heads=n_heads, cutoff=cutoff, kernel_size=kernel_size
                         )
         
