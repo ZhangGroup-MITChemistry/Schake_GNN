@@ -151,10 +151,10 @@ class Schake_modular(torch.nn.Module):
 ############################################################################################################################
 
 class expnorm_smearing(torch.nn.Module):
-    def __init__(self, start=0.0, stop=5.0, num_gaussians=32):
+    def __init__(self, start=5.0, num_gaussians=32):
         super().__init__()
-        offset = torch.linspace(torch.exp(-torch.tensor(stop)), 1, num_gaussians)  # Determines the center of each function
-        self.beta = torch.pow(2*torch.pow(torch.tensor(num_gaussians), -1.)*(1 - torch.exp(-torch.tensor(stop))), -2.)  # Determines the width of each function
+        offset = torch.linspace(torch.exp(-torch.tensor(start)), 1, num_gaussians)  # Determines the center of each function
+        self.beta = torch.pow(2*torch.pow(torch.tensor(num_gaussians), -1.)*(1 - torch.exp(-torch.tensor(start))), -2.)  # Determines the width of each function
         self.register_buffer('offset', offset)
 
     def forward(self, dist):
@@ -331,7 +331,7 @@ def create_SchNet_layers(hidden_channels,
         interactions.append(block)
     
     # Define RBF function for SchNet
-    rbf_func = expnorm_smearing(stop=cutoff, num_gaussians=num_gaussians)
+    rbf_func = expnorm_smearing(start=cutoff, num_gaussians=num_gaussians)
     
     return interactions, rbf_func
 
@@ -343,7 +343,6 @@ class SAKELayer(torch.nn.Module):
     """
     SAKE Layer, implemented based on code from
     E(n) Equivariant Convolutional Layer
-    re
     """
 
     def __init__(self, 
@@ -561,7 +560,7 @@ def create_SAKE_layers(in_node_nf,
                                             )
     
     # Define RBF function for SAKE
-    rbf_func = expnorm_smearing(stop=2*cutoff**2, num_gaussians=kernel_size)
+    rbf_func = expnorm_smearing(start=2*cutoff**2, num_gaussians=kernel_size)
     
     # Return all layers
     return embedding_in, embedding_out, sake_conv, energy_network, rbf_func

@@ -9,10 +9,10 @@ from torch_scatter import scatter, scatter_add
 ##############################               Define expnorm RBF function from TorchMD-Net                ##############################
 #######################################################################################################################################
 class expnorm_smearing(torch.nn.Module):
-    def __init__(self, start=0.0, stop=5.0, num_gaussians=32):
+    def __init__(self, start=5.0, num_gaussians=32):
         super().__init__()
-        offset = torch.linspace(torch.exp(-torch.tensor(stop)), 1, num_gaussians)  # Determines the center of each function
-        self.beta = torch.pow(2*torch.pow(torch.tensor(num_gaussians), -1.)*(1 - torch.exp(-torch.tensor(stop))), -2.)  # Determines the width of each function
+        offset = torch.linspace(torch.exp(-torch.tensor(start)), 1, num_gaussians)  # Determines the center of each function
+        self.beta = torch.pow(2*torch.pow(torch.tensor(num_gaussians), -1.)*(1 - torch.exp(-torch.tensor(start))), -2.)  # Determines the width of each function
         self.register_buffer('offset', offset)
 
     def forward(self, dist):
@@ -76,7 +76,7 @@ class SAKELayer(torch.nn.Module):
                                                    )
 
         # Radial basis function
-        self.rbf = torch.nn.Sequential(expnorm_smearing(stop=self.cutoff, num_gaussians=kernel_size),
+        self.rbf = torch.nn.Sequential(expnorm_smearing(start=self.cutoff, num_gaussians=kernel_size),
                                        torch.nn.Linear(kernel_size, hidden_nf)
                                       )
         
