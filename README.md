@@ -6,4 +6,4 @@ Justin Airas and Bin Zhang&ast;
 
 &ast;Corresponding Author: Bin Zhang. E-mail: binz@mit.edu
 
-<img src="Schake_arch.pdf" width=100%> 
+<img src="Schake_arch.png" width=100%> 
