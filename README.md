@@ -5,3 +5,5 @@ Justin Airas and Bin Zhang&ast;
 *Department of Chemistry, Massachusetts Institute of Technology, Cambridge, MA 02139-4307, United States*
 
 &ast;Corresponding Author: Bin Zhang. E-mail: binz@mit.edu
+
+<img src="Schake_arch.pdf" width=100%> 
