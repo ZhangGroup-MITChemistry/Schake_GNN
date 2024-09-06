@@ -16,6 +16,14 @@ Code implementing this model in PyTorch, along with a Jupyter Notebook showing h
 <img src="Schake_arch.png" width=100%> 
 
 If using this model, please cite the following works:
- 1. WIP
+ 1. **WIP**
  2. Wang, Y.; Chodera, J. D. Spatial Attention Kinetic Networks with E(n)-Equivariance. *arXiv* **2023**, arXiv:2301.08893.
  3. Schütt, K. T.; Sauceda, H. E.; Kindermans, P.-J.; Tkatchenko, A., Müller, K.-R. SchNet - A deep learning architecture for molecules and materials. *J. Chem. Phys.* **2018**, *148*, 241722.
+
+## Datasets
+**WIP**
+
+## Size-dependent batch sampler
+To conduct training on our protein datasets, we constructed a custom PyTorch batch sampler. Unlike a typical batch sampler that bins a user-set, fixed number of samples into each batch, our custom batch sampler instead bins molecules based on a running tally of the total number of atoms of all molecule samples added to that batch. This ensures more efficient utilization of GPU memory during training.
+
+Code implementing this custom batch sampler, along with a Jupyter Notebook showing how to implement it, can be found [here](var_size_batch_sampler). If using this batch sampler, please cite our work.
