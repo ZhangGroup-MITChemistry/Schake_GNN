@@ -7,7 +7,7 @@ Justin Airas and Bin Zhang&ast;
 &ast;Corresponding Author: Bin Zhang. E-mail: binz@mit.edu
 
 ## Schake architecture
-The **Sch**Net / S**AKE** hybrid architecture uses a [SAKE](https://arxiv.org/abs/2301.08893)
+The Schake (**Sch**Net / S**AKE** hybrid) architecture uses a [SAKE](https://arxiv.org/abs/2301.08893)
  message-passing layer to process information from neighboring atoms *j* within a short distance from atom *i*, followed by a [SchNet](https://doi.org/10.1063/1.5019779) 
 message-passing layer to process information from neighboring alpha carbons atoms *k* beyond the short distance cutoff used within the SAKE message-passing layer.
 
