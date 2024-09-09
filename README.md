@@ -16,7 +16,7 @@ Code implementing this model in PyTorch, along with a Jupyter Notebook showing h
 <img src="Schake_arch.png" width=100%> 
 
 If using this model, please cite the following works:
- 1. **WIP**
+ 1. Airas, J.; Zhang, B. **WIP**
  2. Wang, Y.; Chodera, J. D. Spatial Attention Kinetic Networks with E(n)-Equivariance. *arXiv* **2023**, arXiv:2301.08893.
  3. Schütt, K. T.; Sauceda, H. E.; Kindermans, P.-J.; Tkatchenko, A., Müller, K.-R. SchNet - A deep learning architecture for molecules and materials. *J. Chem. Phys.* **2018**, *148*, 241722.
 
