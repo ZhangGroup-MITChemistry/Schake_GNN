@@ -21,7 +21,9 @@ If using this model, please cite the following works:
  3. Schütt, K. T.; Sauceda, H. E.; Kindermans, P.-J.; Tkatchenko, A., Müller, K.-R. SchNet - A deep learning architecture for molecules and materials. *J. Chem. Phys.* **2018**, *148*, 241722.
 
 ## DISPEF Datasets
-The larger subsets of the DISPEF dataset, referred to as "lim2000", "res400", and "res400+" in our manuscript, will be made publically available on a suitable data hosting website.We'll add the link here as soon as they are available.
+Most GNNs are designed and optimized to produce accurate predictions for small molecule datasets. Our custom **D**ataset of **I**mplicit **S**olvation **P**rotein **E**nergies and **F**orces contains over 100,000 proteins ranging in size from 16 to 1,022 amino acids, along with their implicit solvation free energies (a many-body energy term) and corresponding forces. These datasets enable evaluation and future design of GNNs for large, biologically-relevant proteins.
+
+The larger subsets of the DISPEF dataset, referred to as "lim2000", "res400", and "res400+" in our manuscript, will be made publically available on a suitable data hosting website. We'll add the link here as soon as they are available.
 
 The smaller subset of the DISPEF dataset used to assess the computational cost of GNNs is available [here](datasets/).
 
