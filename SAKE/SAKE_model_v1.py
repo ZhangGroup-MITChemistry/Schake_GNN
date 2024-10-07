@@ -135,13 +135,6 @@ class SAKELayer(torch.nn.Module):
     # Define distance and semantic attention
     def dist_x_semantic_attn(self, radial, edge_attr):
         # Distance-based attention
-        '''
-        NOTE - if going beyond 1 nm cutoff, or if using units of angstroms,
-        change line below to the following:
-        
-        euclidean_att = self.cosine_cutoff(radial.sqrt())
-        
-        '''
         euclidean_att = self.cosine_cutoff(radial)
         
 	    # Semantic attention
@@ -177,6 +170,11 @@ class SAKELayer(torch.nn.Module):
     def forward(self, h, edge_index, coord, batch):
         row, col = edge_index
         radial, coord_diff = self.coord2radial(edge_index, coord)
+        '''
+        # NOTE - if going beyond 1 nm cutoff, or if using units of angstroms,
+        # uncomment the following line so r rather than r^2 used:
+        '''
+        #radial = radial.sqrt()
 
         edge_feat = self.edge_model(h[row], h[col], radial)
         edge_feat = edge_feat * self.dist_x_semantic_attn(radial, edge_feat)
@@ -206,109 +204,6 @@ class ShiftedSoftplus(torch.nn.Module):
 
     def forward(self, x):
         return torch.nn.functional.softplus(x) - self.shift
-    
-    
-##############################################################################################################################
-###################           Define SAKE model with an additional two-layer energy-predicting NN          ###################
-##############################################################################################################################
-class SAKE(torch.nn.Module):
-    def __init__(self, 
-                 in_node_nf, 
-                 hidden_nf, 
-                 out_node_nf, 
-                 device='cpu', 
-                 act_fn=torch.nn.CELU(alpha=2.0), 
-                 energy_act_fn=torch.nn.CELU(alpha=2.0), 
-                 n_layers=4,
-                 n_heads=4,
-                 cutoff=1,
-                 kernel_size=18,
-                 max_num_neighbors=10000,
-                 embed_type='c36',
-                 normalize=False, 
-                ):
-        '''
-
-        :param in_node_nf: Number of features for 'h' at the input
-        :param hidden_nf: Number of hidden features
-        :param out_node_nf: Number of features for 'h' at the output
-        :param device: Device (e.g. 'cpu', 'cuda:0',...)
-        :param act_fn: Non-linearity
-        :param energy_act_fn: Non-linearity for the energy-predicting NN
-        :param n_layers: Number of layer for the SAKE
-        :param normalize: Normalizes the coordinates messages such that:
-                    instead of: x^{l+1}_i = x^{l}_i + Σ(x_i - x_j)phi_x(m_ij)
-                    we get:     x^{l+1}_i = x^{l}_i + Σ(x_i - x_j)phi_x(m_ij)/||x_i - x_j||
-                    This option is from EGNN code, not used in our work.
-        '''
-        
-        super(SAKE, self).__init__()
-        self.hidden_nf = hidden_nf
-        self.device = device
-        self.n_layers = n_layers
-        self.n_heads = n_heads
-        self.cutoff = cutoff
-        self.kernel_size = kernel_size
-        self.max_num_neighbors = max_num_neighbors
-        
-        # Set num_types based on embedding type
-        '''
-        NOTE - this can (and should) be modified to account
-        for any desired embedding type.
-        '''
-        if embed_type == 'c36':
-            num_types = 41
-        elif embed_type == 'ff14SB':
-            num_types = 47
-        elif embed_type == 'gaff':
-            num_types = 97
-        elif embed_type == 'elements':
-            num_types = 10
-        elif embed_type == 'names':
-            num_types = 83
-        else:
-            raise ValueError ('Invalid embedding type, must be "c36", "ff14SB", "gaff", "elements", or "names".')
-
-        self.embedding_in = torch.nn.Embedding(num_types, self.hidden_nf)
-        self.embedding_out = torch.nn.Linear(self.hidden_nf, out_node_nf)
-        for i in range(0, n_layers):
-            self.add_module("SAKE_%d" % i, SAKELayer(self.hidden_nf, self.hidden_nf, self.hidden_nf,
-                                                act_fn=act_fn, n_heads=self.n_heads, cutoff=self.cutoff, kernel_size=self.kernel_size, normalize=normalize))
-        
-        # Define feed forward network that predicts energy contribution for each output
-        self.energy_network = torch.nn.Sequential(torch.nn.Linear(out_node_nf, out_node_nf//2),
-                                                  energy_act_fn,
-						  torch.nn.Linear(out_node_nf//2, out_node_nf//4),
-						  energy_act_fn,
-                                                  torch.nn.Linear(out_node_nf//4, 1)
-                                                 )
-        
-        self.to(self.device)
-
-    def forward(self, h, x, batch):
-        # Move necessary things to the device of choice
-        x = x.to(self.device)
-        batch = batch.to(self.device)
-        h = h.to(self.device)
-        
-        # Generate adjacency lists
-        edges = radius_graph(x, r=self.cutoff, batch=batch, max_num_neighbors=self.max_num_neighbors)
-        
-        # Run SAKE
-        h = self.embedding_in(h)
-        for i in range(0, self.n_layers):
-            h = self._modules["SAKE_%d" % i](h, edges, x, batch)
-        
-        h = self.embedding_out(h)
-        
-        # Run the energy predition network
-        h = self.energy_network(h)
-        
-        # Sum pooling
-        out = scatter(h, batch, dim=0, reduce='add')
-        
-        #return h, x
-        return out.squeeze()
     
 ##############################################################################################################################
 ### Create SAKE layers
