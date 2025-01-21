@@ -23,7 +23,7 @@ If using this model, please cite the following works:
 ## DISPEF Subsets
 Most GNNs are designed and optimized to produce accurate predictions for small molecule datasets. Our custom **D**ataset of **I**mplicit **S**olvation **P**rotein **E**nergies and **F**orces contains over 100,000 proteins ranging in size from 16 to 1,022 amino acids, along with their implicit solvation free energies (a many-body energy term) and corresponding forces. DISPEF enables evaluation and future design of GNNs for large, biologically-relevant proteins.
 
-The three main subsets of DISPEF, referred to as DISPEF-S, DISPEF-M, and DISPEF-L are available on Zenodo with the following DOI: 10.5281/zenodo.13755810.
+The three main subsets of DISPEF, referred to as DISPEF-S, DISPEF-M, and DISPEF-L are available on [Zenodo](https://doi.org/10.5281/zenodo.13755810).
 
 The smaller subset of DISPEF used to assess the computational cost of GNNs (referred to as DISPEF-c) is available [here](datasets/).
 
