@@ -6,15 +6,28 @@ Justin Airas and Bin Zhang&ast;
 
 &ast;Corresponding Author: Bin Zhang. E-mail: binz@mit.edu
 
+## Table of Contents
+* [Schake architecture](#schake-architecture)
+  * [Original model](#original-model)
+* [References](#references)
+* [DISPEF Subsets](#dispef-subsets)
+* [Variable-size batch sampler](#variable-size-batch-sampler)
+
+
 ## Schake architecture
 The multiscale Schake (**Sch**Net / S**AKE** hybrid) architecture uses a [SAKE](https://arxiv.org/abs/2301.08893)
  message-passing layer to process information from neighboring atoms *j* within a short distance from atom *i*, followed by a [SchNet](https://doi.org/10.1063/1.5019779) 
 message-passing layer to process information from neighboring alpha carbons atoms *k* beyond the short distance cutoff used within the SAKE message-passing layer.
 
-Code implementing this model in PyTorch, along with a Jupyter Notebook showing how to use the model for any set of atom types and Cartesian coordinates, is available [here](Schake/).
+### Original model
+Code implementing this model in PyTorch, along with a Jupyter Notebook showing how to use the model for any set of atom types and Cartesian coordinates, is available [here](Schake/v1/).
+
+
 
 <img src="Schake_arch.png" width=100%> 
 
+
+## References
 If using this model, please cite the following works:
  1. Airas, J.; Zhang, B. Scaling Graph Neural Networks to Large Proteins. *J. Chem. Theory Comput.* **2025**, *21*(4), 2055-2066.
  2. Wang, Y.; Chodera, J. D. Spatial Attention Kinetic Networks with E(n)-Equivariance. *arXiv* **2023**, arXiv:2301.08893.
