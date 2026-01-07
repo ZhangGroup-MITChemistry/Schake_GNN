@@ -19,19 +19,16 @@ The multiscale Schake (**Sch**Net / S**AKE** hybrid) architecture uses a [SAKE](
  message-passing layer to process information from neighboring atoms *j* within a short distance from atom *i*, followed by a [SchNet](https://doi.org/10.1063/1.5019779) 
 message-passing layer to process information from neighboring alpha carbons atoms *k* beyond the short distance cutoff used within the SAKE message-passing layer.
 
+<img src="Schake_arch.png" width=100%>
+
 ### Original model
 Code implementing this model in PyTorch, along with a Jupyter Notebook showing how to use the model for any set of atom types and Cartesian coordinates, is available [here](Schake/v1/).
 
-
-
-<img src="Schake_arch.png" width=100%> 
-
-
 ## References
 If using this model, please cite the following works:
- 1. Airas, J.; Zhang, B. Scaling Graph Neural Networks to Large Proteins. *J. Chem. Theory Comput.* **2025**, *21*(4), 2055-2066.
- 2. Wang, Y.; Chodera, J. D. Spatial Attention Kinetic Networks with E(n)-Equivariance. *arXiv* **2023**, arXiv:2301.08893.
- 3. Schütt, K. T.; Sauceda, H. E.; Kindermans, P.-J.; Tkatchenko, A., Müller, K.-R. SchNet - A deep learning architecture for molecules and materials. *J. Chem. Phys.* **2018**, *148*, 241722.
+ 1. Airas, J.; Zhang, B. Scaling Graph Neural Networks to Large Proteins. *J. Chem. Theory Comput.* **2025**, *21*(4), 2055-2066. [JCTC paper](https://pubs.acs.org/doi/full/10.1021/acs.jctc.4c01420)
+ 2. Wang, Y.; Chodera, J. D. Spatial Attention Kinetic Networks with E(n)-Equivariance. *arXiv* **2023**, arXiv:2301.08893. [arXiv preprint](https://arxiv.org/abs/2301.08893)
+ 3. Schütt, K. T.; Sauceda, H. E.; Kindermans, P.-J.; Tkatchenko, A., Müller, K.-R. SchNet - A deep learning architecture for molecules and materials. *J. Chem. Phys.* **2018**, *148*, 241722. [JCP paper](https://pubs.aip.org/aip/jcp/article/148/24/241722/962591/SchNet-A-deep-learning-architecture-for-molecules)
 
 ## DISPEF Subsets
 Most GNNs are designed and optimized to produce accurate predictions for small molecule datasets. Our custom **D**ataset of **I**mplicit **S**olvation **P**rotein **E**nergies and **F**orces contains over 200,000 proteins ranging in size from 16 to 1,022 amino acids, along with their implicit solvation free energies (a many-body energy term) and corresponding forces. DISPEF enables evaluation and future design of GNNs for large, biologically-relevant proteins.
