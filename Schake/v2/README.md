@@ -6,8 +6,6 @@ Justin Airas and Bin Zhang&ast;
 
 &ast;Corresponding Author: Bin Zhang. E-mail: binz@mit.edu
 
-<img src="TOC.png" width=100%>
-
 ## Table of Contents
 * [Introduction](#introduction)
 * [Schake (version 2)](#schake-(version-2))
@@ -15,6 +13,8 @@ Justin Airas and Bin Zhang&ast;
 * [References](#references)
 
 ## Introduction
+<img src="TOC.png" width=100%>
+
 We introduce a novel strategy that distills the evolutionary information learned by a protein language model, [ESM3](https://github.com/evolutionaryscale/esm), into a computationally efficient graph neural network (GNN). We show that this GNN potential, trained on effective energies from ESM3, is robust enough to drive stable, long-timescale molecular dynamics simulations. When combined with a standard electrostatics term, our hybrid model accurately reproduces protein folding free-energy landscapes and predicts the structural ensembles of intrinsically disordered proteins. This approach yields a single, unified model that is transferable across both folded and disordered protein states, resolving a long-standing limitation of conventional implicit solvent models.
  
 While these results establish a compelling proof of principle, our present model is not yet production-ready. Schake was trained primarily on folded structures, and future efforts will benefit from expanding the training set to better represent IDPs, systematically fine-tuning against explicit-solvent simulations, and optimizing GPU kernels to unlock even greater simulation throughput.
