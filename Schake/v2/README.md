@@ -6,7 +6,7 @@ Justin Airas and Bin Zhang&ast;
 
 &ast;Corresponding Author: Bin Zhang. E-mail: binz@mit.edu
 
-<img scr="TOC.png" width=100%>
+<img src="TOC.png" width=100%>
 
 ## Table of Contents
 * [Introduction](#introduction)
