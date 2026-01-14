@@ -40,7 +40,7 @@ from openmmtorch import TorchForce
 # system setup code
 
 # Add TorchForce
-Schake = TorchForce(traced_model.pt)
+Schake = TorchForce('traced_model.pt')
 
 U_torch = CustomCVForce('T * E_scale * U_Schake')
 U_torch.addCollectiveVariable('U_Schake', Schake)
