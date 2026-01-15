@@ -843,11 +843,14 @@ def create_Schake(hidden_channels, num_layers, kernel_size, neighbor_embed: str,
 ##############################################################################################################################
 ### Define function to edit the state dict for single model
 ##############################################################################################################################
-def _SP_state_dict(state_dict):
+def _SP_state_dict(state_dict, single_pro=True):
     # Edit state dict to apply to this model
     new_dict = OrderedDict()
     for key, val in state_dict.items():
-        new_dict['pseudo_energy.'+key] = val
+        if single_pro:
+            new_dict['pseudo_energy.'+key] = val
+        else:
+            new_dict[key] = val
         
     return new_dict
 
