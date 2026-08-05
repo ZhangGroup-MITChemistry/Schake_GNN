@@ -32,7 +32,7 @@ Code implementing our foundational implicit solvent model, a Jupyter Notebook sh
 ## References
 If using this model, please cite the following works:
  1. Airas, J.; Zhang, B. Scaling Graph Neural Networks to Large Proteins. *J. Chem. Theory Comput.* **2025**, *21*(4), 2055-2066. [JCTC paper](https://pubs.acs.org/doi/full/10.1021/acs.jctc.4c01420)
- 2. Airas, J.; Zhang, B. Knowledge Distillation of a Protein Language Model Yields a Foundational Implicit Solvent Model. *arXiv* **2026**, arXiv:2601.05388. [arXiv preprint](https://arxiv.org/abs/2601.05388)
+ 2. Airas, J.; Zhang, B. Knowledge Distillation of a Protein Language Model Yields a Foundational Implicit Solvent Model. *J. Chem. Theory Comput.* **2026**, *22*(14), 7382–7393. [JCTC paper](https://doi.org/10.1021/acs.jctc.6c00574)
  3. Wang, Y.; Chodera, J. D. Spatial Attention Kinetic Networks with E(n)-Equivariance. *arXiv* **2023**, arXiv:2301.08893. [arXiv paper](https://arxiv.org/abs/2301.08893)
  4. Schütt, K. T.; Sauceda, H. E.; Kindermans, P.-J.; Tkatchenko, A., Müller, K.-R. SchNet - A deep learning architecture for molecules and materials. *J. Chem. Phys.* **2018**, *148*, 241722. [JCP paper](https://pubs.aip.org/aip/jcp/article/148/24/241722/962591/SchNet-A-deep-learning-architecture-for-molecules)
 

@@ -59,4 +59,4 @@ The original architecture is detailed in the following work:
 * Airas, J.; Zhang, B. Scaling Graph Neural Networks to Large Proteins. *J. Chem. Theory Comput.* **2025**, *21*(4), 2055-2066. [JCTC paper](https://pubs.acs.org/doi/full/10.1021/acs.jctc.4c01420)
 
 The preprint detailing our recent model is available on arXiv:
-* Airas, J.; Zhang, B. Knowledge Distillation of a Protein Language Model Yields a Foundational Implicit Solvent Model. *arXiv* **2026**, arXiv:2601.05388. [arXiv preprint](https://arxiv.org/abs/2601.05388)
+* Airas, J.; Zhang, B. Knowledge Distillation of a Protein Language Model Yields a Foundational Implicit Solvent Model. *J. Chem. Theory Comput.* **2026**, *22*(14), 7382–7393. [JCTC paper](https://doi.org/10.1021/acs.jctc.6c00574)
